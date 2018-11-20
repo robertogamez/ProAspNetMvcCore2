@@ -7,15 +7,16 @@ using System.Threading.Tasks;
 
 namespace GettingStartedAspNetIdentity.Infrastructure
 {
-    public class CustomPasswordValidator : IPasswordValidator<AppUser>
+    public class CustomPasswordValidator : PasswordValidator<AppUser>
     {
-        public Task<IdentityResult> ValidateAsync(
+        public override async Task<IdentityResult> ValidateAsync(
             UserManager<AppUser> manager, 
             AppUser user, 
             string password)
         {
-            List<IdentityError> errors = new List<IdentityError>();
+            IdentityResult result = await base.ValidateAsync(manager, user, password);
 
+            List<IdentityError> errors = result.Succeeded ? new List<IdentityError>() : result.Errors.ToList();
 
             if (password.ToLower().Contains(user.UserName.ToLower()))
             {
@@ -35,9 +36,7 @@ namespace GettingStartedAspNetIdentity.Infrastructure
                 });
             }
 
-            return Task.FromResult(errors.Count == 0
-                ? IdentityResult.Success 
-                : IdentityResult.Failed(errors.ToArray()));
+            return errors.Count == 0 ? IdentityResult.Success : IdentityResult.Failed(errors.ToArray());
         }
     }
 }
