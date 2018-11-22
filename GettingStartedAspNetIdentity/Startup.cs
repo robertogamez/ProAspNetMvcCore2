@@ -47,7 +47,7 @@ namespace GettingStartedAspNetIdentity
                 opts.Password.RequireDigit = false;
 
                 opts.User.RequireUniqueEmail = true;
-                opts.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyz";
+                //opts.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyz";
             })
                 .AddEntityFrameworkStores<AppIdentityDbContext>()
                 .AddDefaultTokenProviders();
