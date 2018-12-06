@@ -71,7 +71,7 @@ namespace GettingStartedAspNetIdentity.Controllers
         }
 
         [AllowAnonymous]
-        public IActionResult IActionResult()
+        public IActionResult AccessDenied()
         {
             return View();
         }

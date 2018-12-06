@@ -36,7 +36,7 @@ namespace GettingStartedAspNetIdentity
             });
 
             services.AddTransient<IPasswordValidator<AppUser>, CustomPasswordValidator>();
-            services.AddTransient<IUserValidator<AppUser>, CustomUserValidator>();
+            //services.AddTransient<IUserValidator<AppUser>, CustomUserValidator>();
 
             services.AddIdentity<AppUser, IdentityRole>(opts =>
             {
@@ -69,7 +69,7 @@ namespace GettingStartedAspNetIdentity
             app.UseAuthentication();
             app.UseMvcWithDefaultRoute();
 
-            AppIdentityDbContext.CreateAdminAccount(app.ApplicationServices, Configuration).Wait();
+            //AppIdentityDbContext.CreateAdminAccount(app.ApplicationServices, Configuration).Wait();
         }
     }
 }
