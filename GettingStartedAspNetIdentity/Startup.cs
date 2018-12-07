@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using GettingStartedAspNetIdentity.Infrastructure;
 using GettingStartedAspNetIdentity.Models;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -37,6 +38,7 @@ namespace GettingStartedAspNetIdentity
 
             services.AddTransient<IPasswordValidator<AppUser>, CustomPasswordValidator>();
             //services.AddTransient<IUserValidator<AppUser>, CustomUserValidator>();
+            services.AddSingleton<IClaimsTransformation, LocationClaimsProvider>();
 
             services.AddIdentity<AppUser, IdentityRole>(opts =>
             {
