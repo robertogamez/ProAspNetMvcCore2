@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using GettingStartedAspNetIdentity.Infrastructure;
 using GettingStartedAspNetIdentity.Models;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -39,6 +41,21 @@ namespace GettingStartedAspNetIdentity
             services.AddTransient<IPasswordValidator<AppUser>, CustomPasswordValidator>();
             //services.AddTransient<IUserValidator<AppUser>, CustomUserValidator>();
             services.AddSingleton<IClaimsTransformation, LocationClaimsProvider>();
+            services.AddTransient<IAuthorizationHandler, BlockUsersHandler>();
+
+            services.AddAuthorization(opts =>
+            {
+                opts.AddPolicy("DCUsers", policy =>
+                {
+                    policy.RequireRole("Users");
+                    policy.RequireClaim(ClaimTypes.StateOrProvince, "DC");
+                });
+                opts.AddPolicy("NotBob", policy =>
+                {
+                    policy.RequireAuthenticatedUser();
+                    policy.AddRequirements(new BlockUsersRequirement("Bob"));
+                });
+            });
 
             services.AddIdentity<AppUser, IdentityRole>(opts =>
             {

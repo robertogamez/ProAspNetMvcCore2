@@ -27,9 +27,14 @@ namespace GettingStartedAspNetIdentity.Controllers
         [Authorize]
         public IActionResult Index() => View(GetData(nameof(Index)));
 
-        [Authorize(Roles = "Users")]
+        //[Authorize(Roles = "Users")]
+        [Authorize(Policy = "DCUsers")]
         public IActionResult OtherAction() =>
             View("Index", GetData(nameof(OtherAction)));
+
+        [Authorize(Policy = "NotBob")]
+        public IActionResult NotBob() =>
+            View("Index", GetData(nameof(NotBob)));
 
         private Dictionary<string, object> GetData(string actionName) =>
             new Dictionary<string, object>
