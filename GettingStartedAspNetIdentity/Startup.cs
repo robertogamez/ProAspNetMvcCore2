@@ -42,6 +42,7 @@ namespace GettingStartedAspNetIdentity
             //services.AddTransient<IUserValidator<AppUser>, CustomUserValidator>();
             services.AddSingleton<IClaimsTransformation, LocationClaimsProvider>();
             services.AddTransient<IAuthorizationHandler, BlockUsersHandler>();
+            services.AddTransient<IAuthorizationHandler, DocumentAuthorizationHandler>();
 
             services.AddAuthorization(opts =>
             {
@@ -54,6 +55,14 @@ namespace GettingStartedAspNetIdentity
                 {
                     policy.RequireAuthenticatedUser();
                     policy.AddRequirements(new BlockUsersRequirement("Bob"));
+                });
+                opts.AddPolicy("AuthorsAndEditors", policy =>
+                {
+                    policy.AddRequirements(new DocumentAuthorizationRequirement
+                    {
+                        AllowAuthors = true,
+                        AllowEditors = true
+                    });
                 });
             });
 
