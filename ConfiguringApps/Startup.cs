@@ -24,7 +24,16 @@ namespace ConfiguringApps
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             //app.UseMvcWithDefaultRoute();
-            app.UseMiddleware<ContentMiddleware>();
+            //app.UseMiddleware<BrowserTypeMiddleware>();
+            //app.UseMiddleware<ShortCircuitMiddleware>();
+            //app.UseMiddleware<ContentMiddleware>();
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller=Home}/{action=Index}/{id?}"
+                );
+            });
         }
     }
 }
