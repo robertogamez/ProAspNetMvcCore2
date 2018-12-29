@@ -9,11 +9,16 @@ namespace DependencyInjection.Controllers
 {
     public class HomeController : Controller
     {
-        public IRepository Repository { get; set; } = new MemoryRepository();
+        private readonly IRepository repository;
+
+        public HomeController(IRepository repo)
+        {
+            repository = repo;
+        }
 
         public IActionResult Index()
         {
-            return View(Repository.Products);
+            return View(repository.Products);
         }
     }
 }
