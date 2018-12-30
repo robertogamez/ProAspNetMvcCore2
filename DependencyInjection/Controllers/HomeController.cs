@@ -10,14 +10,18 @@ namespace DependencyInjection.Controllers
     public class HomeController : Controller
     {
         private readonly IRepository repository;
+        private readonly ProductTotalizer totalizer;
 
-        public HomeController(IRepository repo)
+        public HomeController(IRepository repo, ProductTotalizer total)
         {
             repository = repo;
+            totalizer = total;
         }
 
         public IActionResult Index()
         {
+            ViewBag.HomeController = repository.ToString();
+            ViewBag.Total = totalizer.Repository.ToString();
             return View(repository.Products);
         }
     }

@@ -8,6 +8,10 @@
     <link rel="stylesheet" asp-href-include="lib/bootstrap/dist/css/*.min.css" />
 </head>
 <body class="m-1 p-1">
+    <p>
+        HomeController: @ViewBag.HomeController
+        Totalizer: @ViewBag.Total
+    </p>
     @if (ViewData.Count > 0)
     {
         <table class="table table-bordered table-sm table-striped">
