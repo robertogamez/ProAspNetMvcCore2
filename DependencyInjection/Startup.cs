@@ -20,17 +20,18 @@ namespace DependencyInjection
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddTransient<IRepository>(provider =>
-            {
-                if (env.IsDevelopment())
-                {
-                    var x = provider.GetService<MemoryRepository>();
-                    return x;
-                }
+            //services.AddTransient<IRepository>(provider =>
+            //{
+            //    if (env.IsDevelopment())
+            //    {
+            //        var x = provider.GetService<MemoryRepository>();
+            //        return x;
+            //    }
 
-                return provider.GetService<MemoryRepository>();
-            });
-            services.AddTransient<MemoryRepository>();
+            //    return provider.GetService<MemoryRepository>();
+            //});
+            //services.AddTransient<MemoryRepository>();
+            services.AddScoped<IRepository, MemoryRepository>();
             services.AddTransient<IModelStorage, DictionaryStorage>();
             services.AddTransient<ProductTotalizer>();
             services.AddMvc();
